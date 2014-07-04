@@ -19,12 +19,14 @@ extension CGPoint{
     static func minus(a: CGPoint,_ b: CGPoint)-> CGPoint{return CGPoint(a.x - b.x, a.y - b.y);}
     static func multiply(a: CGPoint,_ b: CGFloat)-> CGPoint{return CGPoint(a.x * b, a.y * b);}
     static func divide(a: CGPoint,_ b: CGFloat)-> CGPoint{return CGPoint(a.x / b, a.y / b);}
+    static func equals(a: CGPoint,_ b: CGPoint)-> Bool{return a.x == b.x && a.y == b.y;}
     
     //Instance functions of arithmetic operators
     mutating func add(b: CGPoint)-> CGPoint{self = CGPoint.add(self, b); return self;}
     mutating func minus(b: CGPoint)-> CGPoint{self = CGPoint.minus(self, b); return self;}
     mutating func multiply(b: CGFloat)-> CGPoint{self = CGPoint.multiply(self, b); return self;}
     mutating func divide(b: CGFloat)-> CGPoint{self = CGPoint.divide(self, b); return self;}
+    func equals(b: CGPoint)-> Bool{return CGPoint.equals(self, b);}
     
     //Static and instance normalize functions
     static func normalize(p: CGPoint)-> CGPoint{
@@ -48,3 +50,7 @@ extension CGPoint{
 @assignment func -= (inout a: CGPoint, b: CGPoint){a = a - b;}
 @assignment func *= (inout a: CGPoint, b: CGFloat){a = a * b;}
 @assignment func /= (inout a: CGPoint, b: CGFloat){a = a / b;}
+
+//Equivalence Operators
+@infix func == (a: CGPoint, b: CGPoint)-> Bool{return a.equals(b);}
+@infix func != (a: CGPoint, b: CGPoint)-> Bool{return !(a == b);}
