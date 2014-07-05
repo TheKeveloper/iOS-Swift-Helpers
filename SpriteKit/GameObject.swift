@@ -16,7 +16,11 @@ enum SpriteShape{
 class GameObject{
     //Declarations
     let sprite : SKSpriteNode;
-    var name : String = "";
+    
+    var name : String{
+    get{return sprite.name? ? sprite.name : ""}
+    set{sprite.name = newValue}
+    }
     
     var size: CGSize{
     get{return sprite.size;}
@@ -147,7 +151,7 @@ class GameObject{
         
         if(shapeA == shapeB){
             if(shapeA == .Rectangle){
-                return self.left <= other.right && self.right >= other.left && self.top >= other.bottom && self.bottom <= other.top;
+                return sprite.intersectsNode(other.sprite)
             }
             else{
                 var radA = size.width / 2;
@@ -157,9 +161,7 @@ class GameObject{
                 return (diffX * diffX) + (diffY * diffY) <= (radA + radB) * (radA + radB);
             }
         }
-        //Haven't figured out yet how to do Rect - Circle collision detection
-        //Will implement later
-        return false;
+        return sprite.intersectsNode(other.sprite);
     }
     
     func contains(p: CGPoint)-> Bool{
