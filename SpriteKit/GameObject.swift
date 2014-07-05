@@ -177,4 +177,7 @@ class GameObject{
         }
     }
     
+    func hitSide()-> Bool{
+        return right >= ScreenSize.width() || left <= 0 || top >= ScreenSize.height() || bottom <= 0;
+    }
 }
