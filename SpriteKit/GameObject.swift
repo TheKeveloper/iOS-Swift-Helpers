@@ -16,6 +16,7 @@ enum SpriteShape{
 class GameObject{
     //Declarations
     let sprite : SKSpriteNode;
+    var name : String = "";
     
     var size: CGSize{
     get{return sprite.size;}
@@ -34,6 +35,7 @@ class GameObject{
     get{return sprite.position}
     set(newValue){sprite.position = newValue}
     }
+    //Shorter ways to access x and y of the position
     var x: CGFloat{
     get{return sprite.position.x}
     set{sprite.position.x = newValue}
@@ -42,6 +44,8 @@ class GameObject{
     get{return sprite.position.y}
     set{sprite.position.y = newValue}
     }
+    
+    //Ways to access the y values of the top and bottom, and the x values of the left and right
     var top: CGFloat{
     get{return sprite.position.y + (sprite.size.height * sprite.anchorPoint.y)}
     set(newValue){sprite.position.y = newValue - (sprite.size.height * sprite.anchorPoint.y)}
@@ -93,6 +97,15 @@ class GameObject{
         self.speed = speed;
         self.shape = shape;
     }
+    
+    init(texture: SKTexture,_ size: CGSize,_ pos: CGPoint,_ speed: CGFloat,_ dir: CGPoint,_ shape: SpriteShape?){
+        self.sprite = SKSpriteNode(texture: texture);
+        self.size = size;
+        self.position = pos;
+        self.speed = speed;
+        self.direction = dir;
+        self.shape = shape;
+    }
     //Convenience initializers
     convenience init(_ sprite: SKSpriteNode, size: CGSize, pos: CGPoint, speed: CGFloat, dir: CGPoint){
         self.init(sprite, size, pos, speed, dir, nil);
@@ -105,6 +118,19 @@ class GameObject{
     }
     convenience init(_ sprite: SKSpriteNode){
         self.init(sprite, sprite.size, sprite.position, 0, CGPoint.zeroPoint, nil);
+    }
+    
+    convenience init(texture: SKTexture, size: CGSize, pos: CGPoint, speed: CGFloat, dir: CGPoint){
+        self.init(texture: texture, size, pos, speed, dir, nil);
+    }
+    convenience init(texture: SKTexture, size: CGSize, pos: CGPoint){
+        self.init(texture: texture, size, pos, 0, CGPoint.zeroPoint, nil);
+    }
+    convenience init(texture: SKTexture, size: CGSize){
+        self.init(texture: texture, size, CGPoint.zeroPoint, 0, CGPoint.zeroPoint, nil);
+    }
+    convenience init(texture: SKTexture){
+        self.init(texture: texture, texture.size(), CGPoint.zeroPoint, 0, CGPoint.zeroPoint, nil);
     }
     
     //Methods
