@@ -1,6 +1,5 @@
 //
 //  CGSize_Extension.swift
-//  Flying Squircle
 //
 //  Created by Kevin Bi on 7/4/14.
 //  Copyright (c) 2014 Kevelopment. All rights reserved.
