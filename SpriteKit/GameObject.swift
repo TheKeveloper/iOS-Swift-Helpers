@@ -5,7 +5,9 @@
 //  Created by Kevin Bi on 7/3/14.
 //
 //
-//  ======== REQUIRES CGPoint_Extension.swift TO FUNCTION PROPERLY ========
+//  Required Files:
+//  - CGPoint_Extension.swift
+//  - ScreenSize.swift
 
 import SpriteKit
 
@@ -75,6 +77,11 @@ class GameObject{
     }
     
     var shape : SpriteShape?;
+    
+    var physics : SKPhysicsBody?{
+    get{return sprite.physicsBody}
+    set{sprite.physicsBody = newValue}
+    }
     
     var speed : CGFloat = 0.0;
     var direction : CGPoint?{
@@ -180,4 +187,36 @@ class GameObject{
     func hitSide()-> Bool{
         return right >= ScreenSize.width() || left <= 0 || top >= ScreenSize.height() || bottom <= 0;
     }
+    
+    //Enables physics for the sprite based on shape
+    func enablePhysics(dynamic: Bool)->Void{
+        if(shape! == .Circle){
+            physics = SKPhysicsBody(circleOfRadius: width / 2, center: center);
+        }
+        else{
+            physics = SKPhysicsBody(rectangleOfSize: size);
+        }
+        physics!.dynamic = dynamic;
+    }
+    
+//  Sets the phsics body to nil
+    func disablePhysics()->Void{
+        physics = nil;
+    }
+    
+//  Returns the body that conforms to the category.
+//  Returns nil if neither are in category
+//  Returns contact.bodyA if both are in category
+    class func getBodyForCategory(contact: SKPhysicsContact, category: UInt32)->SKPhysicsBody?{
+        if(contact.bodyA.categoryBitMask & category > 0){
+            return contact.bodyA;
+        }
+        else if(contact.bodyB.categoryBitMask & category > 0){
+            return contact.bodyB;
+        }
+        else{
+            return nil;
+        }
+    }
+    
 }
