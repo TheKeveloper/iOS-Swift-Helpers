@@ -20,7 +20,7 @@ class GameObject{
     let sprite : SKSpriteNode;
     
     var name : String{
-    get{return sprite.name? ? sprite.name : ""}
+    get{return (sprite.name? != nil) ? sprite.name : ""}
     set{sprite.name = newValue}
     }
     
@@ -117,6 +117,15 @@ class GameObject{
         self.direction = dir;
         self.shape = shape;
     }
+    
+    init(source : GameObject){
+        self.sprite = source.sprite;
+        self.size = source.size;
+        self.position = source.position;
+        self.direction = source.direction;
+        self.speed = source.speed;
+        self.shape = source.shape;
+    }
     //Convenience initializers
     convenience init(_ sprite: SKSpriteNode, size: CGSize, pos: CGPoint, speed: CGFloat, dir: CGPoint){
         self.init(sprite, size, pos, speed, dir, nil);
@@ -153,8 +162,8 @@ class GameObject{
     }
     
     func intersects(other: GameObject)-> Bool {
-        let shapeA = self.shape? ? self.shape! : SpriteShape.Rectangle;
-        let shapeB = other.shape? ? other.shape! : SpriteShape.Rectangle;
+        let shapeA = (self.shape? != nil) ? self.shape! : SpriteShape.Rectangle;
+        let shapeB = (other.shape? != nil) ? other.shape! : SpriteShape.Rectangle;
         
         if(shapeA == shapeB){
             if(shapeA == .Rectangle){
@@ -172,7 +181,7 @@ class GameObject{
     }
     
     func contains(p: CGPoint)-> Bool{
-        var shape = self.shape? ? self.shape! : SpriteShape.Rectangle;
+        var shape = (self.shape? != nil) ? self.shape! : SpriteShape.Rectangle;
         if(shape == .Rectangle){
             return p.x >= self.left && p.x <= self.right && p.y >= self.bottom && p.y <= self.top;
         }
@@ -185,7 +194,7 @@ class GameObject{
     }
     
     func hitSide()-> Bool{
-        return right >= ScreenSize.width() || left <= 0 || top >= ScreenSize.height() || bottom <= 0;
+        return right >= CGFloat(ScreenSize.width()) || left <= 0 || top >= CGFloat(ScreenSize.height()) || bottom <= 0;
     }
     
     //Enables physics for the sprite based on shape
@@ -217,6 +226,11 @@ class GameObject{
         else{
             return nil;
         }
+    }
+    
+    func destroy()->Void{
+        shape = nil;
+        sprite.removeFromParent();
     }
     
 }

@@ -10,11 +10,11 @@ import UIKit
 
 class ScreenSize{
     class func width()->Float{
-        return UIScreen.mainScreen().bounds.size.width;
+        return Float(UIScreen.mainScreen().bounds.size.width);
     }
     
     class func height()->Float{
-        return UIScreen.mainScreen().bounds.size.height;
+        return Float(UIScreen.mainScreen().bounds.size.height);
     }
     
     class func pctWidth(percent: Float)-> Float{
@@ -26,6 +26,6 @@ class ScreenSize{
     }
     
     class func pct(width: Float, height: Float)-> CGPoint{
-        return CGPoint(ScreenSize.width() * (width / 100), ScreenSize.height() * (height / 100));
+        return CGPoint(CGFloat(ScreenSize.width() * (width / 100)), CGFloat(ScreenSize.height() * (height / 100)));
     }
 }

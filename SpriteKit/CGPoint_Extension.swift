@@ -32,24 +32,24 @@ extension CGPoint{
         if(p.x == 0 && p.y == 0) {
             return p;
         }
-        var mag = sqrtf((p.x * p.x) + (p.y * p.y));
+        var mag = CGFloat(sqrtf(Float((p.x * p.x) + (p.y * p.y))));
         return CGPoint(p.x / mag, p.y / mag);
     }
     mutating func normalize()->CGPoint{self = CGPoint.normalize(self); return self;}
 }
 
 //Operators
-@infix func + (left: CGPoint, right: CGPoint)-> CGPoint{return CGPoint.add(left, right);}
-@infix func - (left: CGPoint, right: CGPoint)-> CGPoint{return CGPoint.minus(left, right);}
-@infix func * (left: CGPoint, right: CGFloat)-> CGPoint{return CGPoint.multiply(left, right);}
-@infix func / (left: CGPoint, right: CGFloat)-> CGPoint{return CGPoint.divide(left, right);}
+func + (left: CGPoint, right: CGPoint)-> CGPoint{return CGPoint.add(left, right);}
+func - (left: CGPoint, right: CGPoint)-> CGPoint{return CGPoint.minus(left, right);}
+func * (left: CGPoint, right: CGFloat)-> CGPoint{return CGPoint.multiply(left, right);}
+func / (left: CGPoint, right: CGFloat)-> CGPoint{return CGPoint.divide(left, right);}
 
 //Assignment Operators
-@assignment func += (inout a: CGPoint, b: CGPoint){a = a + b;}
-@assignment func -= (inout a: CGPoint, b: CGPoint){a = a - b;}
-@assignment func *= (inout a: CGPoint, b: CGFloat){a = a * b;}
-@assignment func /= (inout a: CGPoint, b: CGFloat){a = a / b;}
+func += (inout a: CGPoint, b: CGPoint){a = a + b;}
+func -= (inout a: CGPoint, b: CGPoint){a = a - b;}
+func *= (inout a: CGPoint, b: CGFloat){a = a * b;}
+func /= (inout a: CGPoint, b: CGFloat){a = a / b;}
 
 //Equivalence Operators
-@infix func == (a: CGPoint, b: CGPoint)-> Bool{return a.equals(b);}
-@infix func != (a: CGPoint, b: CGPoint)-> Bool{return !(a == b);}
+func == (a: CGPoint, b: CGPoint)-> Bool{return a.equals(b);}
+func != (a: CGPoint, b: CGPoint)-> Bool{return !(a == b);}
